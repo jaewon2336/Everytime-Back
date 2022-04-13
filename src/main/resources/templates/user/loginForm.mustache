@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>로그인 기능</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>로그인</h2>
+        <form method="post">
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" class="form-control" placeholder="Enter username" id="username" maxlength="20"
+                    required>
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" class="form-control" placeholder="Enter password" id="password" maxlength="20"
+                    required>
+            </div>
+
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" id="remember"> 로그인 유지
+                </label>
+            </div>
+            <button type="button" class="btn btn-primary" id="btn-login">로그인</button>
+        </form>
+    </div>
+
+</body>
+
+<script>
+    $("#btn-login").click(() => {
+        login();
+    });
+
+    async function login() {
+        // checkBox의 체크여부를 제이쿼리에서 확인하는 법
+        let checked = $("#remember").is(':checked');
+
+        let loginDto = {
+            username: $("#username").val(),
+            password: $("#password").val(),
+            remember: checked ? "on" : "off"
+        }
+
+        let response = await fetch("/login", {
+            method: 'POST',
+            body: JSON.stringify(loginDto),
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }
+        });
+
+        let responseParse = await response.json();
+
+        if (responseParse == 1) {
+            alert("로그인에 성공하셨습니다.");
+            location.href = "/";
+        } else {
+            alert("로그인에 실패하였습니다.");
+        }
+    }
+
+    // username 기억하기 (cookie) httpOnly 속성이 걸려있으면 안되는 것 주의
+    function usernameRemember() {
+        let cookies = document.cookie.split("=");
+        $("#username").val(cookies[1]);
+        console.log(cookies[1]);
+    }
+
+    // 바로 실행
+    usernameRemember();
+</script>
+
+</html>
