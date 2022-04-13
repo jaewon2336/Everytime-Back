@@ -1,5 +1,7 @@
 package site.metacoding.everytimeback.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,16 @@ public class UserService {
 
     public User 로그인(LoginDto loginDto) {
         return userRepository.mLogin(loginDto.getUsername(), loginDto.getPassword());
+    }
+
+    public User 회원정보(Integer id) {
+        Optional<User> userOp = userRepository.findById(id);
+
+        if (userOp.isPresent()) {
+            return userOp.get();
+        } else {
+            throw new RuntimeException("아이디를 찾을 수 없습니당"); // id가 없을 경우 수정 필요
+        }
     }
 
 }

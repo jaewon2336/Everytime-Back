@@ -1,0 +1,33 @@
+<!-- 컨테이너 시작 -->
+<div class="container mt-3">
+
+    <!-- 회원수정 폼 시작 -->
+    <form>
+        <input type="hidden" value="{{user.id}}">
+        <div class="mb-3 mt-3">
+            <input type="text" class="form-control" value="{{user.name}}" readonly>
+        </div>
+        <div class="mb-3 mt-3">
+            <input type="text" class="form-control" value="{{user.username}}" readonly>
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" value="{{user.password}}" required>
+        </div>
+        <div class="mb-3 mt-3">
+            <input type="text" class="form-control" value="{{user.nickname}}" required>
+        </div>
+        <div class="mb-3">
+            <input type="email" class="form-control" value="{{user.email}}" required>
+        </div>
+        <div class="mb-3 mt-3">
+            <input type="text" class="form-control" value="{{user.school}}" readonly>
+        </div>
+        <div class="mb-3 mt-3">
+            <input type="text" class="form-control" value="{{user.studentNo}}" readonly>
+        </div>
+        <button type="button" class="btn btn-secondary">수정완료</button>
+    </form>
+    <!-- 회원수정 폼 끝 -->
+
+</div>
+<!-- 컨테이너 끝 -->
