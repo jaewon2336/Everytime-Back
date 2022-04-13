@@ -15,12 +15,12 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/loginForm")
+    @GetMapping("/user/loginForm")
     public String loginForm() {
         return "/user/loginForm";
     }
 
-    @GetMapping("/joinForm")
+    @GetMapping("/user/joinForm")
     public String joinForm(JoinDto joinDto) {
         return "/user/joinForm";
     }

@@ -16,13 +16,34 @@
     <div class="container">
         <div class="jumbotron">
             <h1>메인입니다.</h1>
-            <p>Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile-first
-                projects on the web.</p>
+            {{#principal}}
+            <a id="btn-logout" type="button" class="btn btn-dark">로그아웃</a>
+            {{/principal}}
+            {{^principal}}
+            <a href="/user/loginForm" class="btn btn-dark">로그인</a>
+            {{/principal}}
         </div>
-        <p>This is some text.</p>
-        <p>This is another text.</p>
     </div>
 
 </body>
+
+<script>
+    $("#btn-logout").click(() => {
+        logout();
+    });
+
+    async function logout() {
+        let response = await fetch("/logout");
+        let responseParse = await response.json();
+
+        if (responseParse == 1) {
+            alert("로그아웃 되었습니다.");
+            location.href = "/";
+        } else {
+            alert("로그아웃에 실패했습니다.");
+        }
+    }
+
+</script>
 
 </html>
