@@ -1,33 +1,22 @@
-<!-- 컨테이너 시작 -->
 <div class="container mt-3">
 
-    <!-- 회원수정 폼 시작 -->
     <form>
-        <input type="hidden" value="{{user.id}}">
+        <input id="id" type="hidden" value="{{principal.id}}">
         <div class="mb-3 mt-3">
-            <input type="text" class="form-control" value="{{user.name}}" readonly>
-        </div>
-        <div class="mb-3 mt-3">
-            <input type="text" class="form-control" value="{{user.username}}" readonly>
+            {{principal.username}}
         </div>
         <div class="mb-3">
-            <input type="password" class="form-control" value="{{user.password}}" required>
-        </div>
-        <div class="mb-3 mt-3">
-            <input type="text" class="form-control" value="{{user.nickname}}" required>
+            {{principal.name}}
         </div>
         <div class="mb-3">
-            <input type="email" class="form-control" value="{{user.email}}" required>
+            {{principal.nickname}}
         </div>
-        <div class="mb-3 mt-3">
-            <input type="text" class="form-control" value="{{user.school}}" readonly>
+        <div class="mb-3">
+            {{principal.school}}
         </div>
-        <div class="mb-3 mt-3">
-            <input type="text" class="form-control" value="{{user.studentNo}}" readonly>
+        <div class="mb-3">
+            {{principal.studentNo}}학번
         </div>
-        <button type="button" class="btn btn-secondary">수정완료</button>
-    </form>
-    <!-- 회원수정 폼 끝 -->
 
+    </form>
 </div>
-<!-- 컨테이너 끝 -->

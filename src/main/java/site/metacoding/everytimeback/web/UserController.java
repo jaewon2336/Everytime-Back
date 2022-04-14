@@ -34,6 +34,16 @@ public class UserController {
         return "/user/updateForm";
     }
 
+    @GetMapping("/s/user/{id}/password")
+    public String passwordUpdateForm(@PathVariable Integer id) {
+        return "/user/passwordUpdateForm";
+    }
+
+    @GetMapping("/s/user/{id}/email")
+    public String emailUpdateForm(@PathVariable Integer id) {
+        return "/user/emailUpdateForm";
+    }
+
     @PostMapping("/join")
     public String join(JoinDto joinDto) {
 

@@ -8,14 +8,19 @@ import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import site.metacoding.everytimeback.domain.user.User;
 import site.metacoding.everytimeback.service.UserService;
+import site.metacoding.everytimeback.web.dto.ResponseDto;
+import site.metacoding.everytimeback.web.dto.user.EmailUpdateDto;
 import site.metacoding.everytimeback.web.dto.user.LoginDto;
+import site.metacoding.everytimeback.web.dto.user.PasswordUpdateDto;
 
 @RequiredArgsConstructor
 @RestController
@@ -50,4 +55,17 @@ public class UserApiController {
         session.invalidate();
         return new ResponseEntity<>(1, HttpStatus.OK);
     }
+
+    @PutMapping("/s/api/user/{id}/password") // 주소 변경 필요?
+    public ResponseDto<?> updatePassword(@PathVariable Integer id, @RequestBody PasswordUpdateDto passwordUpdateDto) {
+        userService.비밀번호수정(id, passwordUpdateDto);
+        return new ResponseDto<>(1, "성공", null);
+    }
+
+    @PutMapping("/s/api/user/{id}/email") // 주소 변경 필요?
+    public ResponseDto<?> updateEmail(@PathVariable Integer id, @RequestBody EmailUpdateDto emailUpdateDto) {
+        userService.이메일수정(id, emailUpdateDto);
+        return new ResponseDto<>(1, "성공", null);
+    }
+
 }
