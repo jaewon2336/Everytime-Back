@@ -2,7 +2,6 @@ package site.metacoding.everytimeback.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +30,6 @@ public class UserController {
         // 핵심로직
         userService.회원가입(joinDto.toEntity());
 
-        return "redirect:/loginForm";
+        return "redirect:/user/loginForm";
     }
 }

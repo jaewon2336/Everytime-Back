@@ -17,4 +17,9 @@ public class PostController {
         return "/post/main";
     }
 
+    @GetMapping("/post/list")
+    public String board() {
+        return "/post/list";
+    }
+
 }

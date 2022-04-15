@@ -36,10 +36,10 @@ public class Post {
     private String title;
 
     @Lob // 4GB
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String content;
 
-    @Column(length = 200, nullable = false)
+    @Column(length = 200, nullable = true)
     private String thumnail;
 
     @JoinColumn(name = "userId")
@@ -53,8 +53,8 @@ public class Post {
 
     private boolean anonyCheck;
 
-    @Column(length = 200)
-    private String tag;
+    @Column(length = 200, nullable = true)
+    private String hashTag;
 
     @CreatedDate
     private LocalDateTime createDate;
