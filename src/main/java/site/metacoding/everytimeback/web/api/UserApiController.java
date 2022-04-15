@@ -29,6 +29,12 @@ public class UserApiController {
     private final UserService userService;
     private final HttpSession session;
 
+    @GetMapping("/api/user/username-same-check")
+    public ResponseEntity<?> usernameSameCheck(String username) {
+        boolean isNotSame = userService.유저네임중복검사(username);
+        return new ResponseEntity<>(isNotSame, HttpStatus.OK);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
         // 인증

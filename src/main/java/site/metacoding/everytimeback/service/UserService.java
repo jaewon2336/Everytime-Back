@@ -23,6 +23,16 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public boolean 유저네임중복검사(String username) {
+        Optional<User> userOp = userRepository.findByUsername(username);
+
+        if (userOp.isPresent()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public User 로그인(LoginDto loginDto) {
         return userRepository.mLogin(loginDto.getUsername(), loginDto.getPassword());
     }

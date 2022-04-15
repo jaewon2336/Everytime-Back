@@ -23,8 +23,8 @@
             </div>
             <div class="form-group">
                 <label>Username:</label>
-                <input type="text" class="form-control" placeholder="Enter username" name="username" maxlength="20"
-                    required>
+                <input id="username" type="text" class="form-control" placeholder="Enter username" name="username"
+                    maxlength="20" required>
             </div>
             <div class="form-group">
                 <label>Password:</label>
@@ -56,5 +56,34 @@
     </div>
 
 </body>
+
+<script>
+    let valid = {
+        username: {
+            state: false
+        }
+    }
+
+    $("#username").focusout(() => {
+        usernameSameCheck();
+    });
+
+    async function usernameSameCheck() {
+        let username = $("#username").val();
+
+        let response = await fetch(`/api/user/username-same-check?username=${username}`);
+        let responseParse = await response.json();
+        // console.log(responseParse);
+        if (response.status === 200) {
+            if (!responseParse) {
+                valid.username.state = false;
+                alert("이미 존재하는 ID 입니다");
+            } else {
+                valid.username.state = true;
+                alert("사용할 수 있는 ID입니다");
+            }
+        }
+    }
+</script>
 
 </html>

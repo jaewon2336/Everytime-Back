@@ -50,6 +50,6 @@ public class UserController {
         // 핵심로직
         userService.회원가입(joinDto.toEntity());
 
-        return "redirect:/loginForm";
+        return "redirect:/user/loginForm";
     }
 }
