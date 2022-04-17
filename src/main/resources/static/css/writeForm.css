@@ -19,7 +19,7 @@ a:hover {
     border: 1px solid #737373;
 }
 
-form {
+.write_form {
     margin: 50px 0;
     border: 2px solid #d6d6d6;
 }
