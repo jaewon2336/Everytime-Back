@@ -3,10 +3,12 @@ package site.metacoding.everytimeback.web.api;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +38,8 @@ public class UserApiController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginDto loginDto, BindingResult bindingResult,
+            HttpServletResponse response) {
         // 인증
         User userEntity = userService.로그인(loginDto);
 
@@ -63,13 +66,15 @@ public class UserApiController {
     }
 
     @PutMapping("/s/api/user/{id}/password") // 주소 변경 필요?
-    public ResponseDto<?> updatePassword(@PathVariable Integer id, @RequestBody PasswordUpdateDto passwordUpdateDto) {
+    public ResponseDto<?> updatePassword(@PathVariable Integer id,
+            @Valid @RequestBody PasswordUpdateDto passwordUpdateDto, BindingResult bindingResult) {
         userService.비밀번호수정(id, passwordUpdateDto);
         return new ResponseDto<>(1, "성공", null);
     }
 
     @PutMapping("/s/api/user/{id}/email") // 주소 변경 필요?
-    public ResponseDto<?> updateEmail(@PathVariable Integer id, @RequestBody EmailUpdateDto emailUpdateDto) {
+    public ResponseDto<?> updateEmail(@PathVariable Integer id, @Valid @RequestBody EmailUpdateDto emailUpdateDto,
+            BindingResult bindingResult) {
         userService.이메일수정(id, emailUpdateDto);
         return new ResponseDto<>(1, "성공", null);
     }
