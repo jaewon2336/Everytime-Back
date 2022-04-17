@@ -79,7 +79,7 @@
                     <button id="btn-like" class="btn btn-secondary">댓글</button>
                 </span>
                 <hr />
-                <span class=mb-3">
+                <span class="mb-3">
                     <span id="scrap-count">0</span>
                     <button id="btn-like" class="btn btn-secondary">스크랩</button>
                 </span>
@@ -101,9 +101,10 @@
                 <div class="card-body">
                     <textarea name="content" class="form-control" rows="1"></textarea>
                     <input type="hidden" value="0" name="likeCount">
-                    <input type="hidden" value="false" name="anonyCheck">
                 </div>
                 <div class="card-footer">
+                    <div id="anony" class="anony"></div>
+                    <input type="hidden" id="anony-text" name="anonyCheck" value="false">
                     <button type="submit" class="btn btn-primary">등록</button>
                 </div>
             </form>
@@ -137,6 +138,18 @@
 
 <script>
 
+    // 익명 체크 이벤트
+    $("#anony").click(() => {
+
+        $("#anony").toggleClass("my_btn_active");
+
+        if ($("#anony").hasClass("my_btn_active") == true) {
+            $("#anony-text").val("true");
+        } else {
+            $("#anony-text").val("false");
+        }
+    });
+
     $("#btn-like").click(() => {
         likeUp();
     });
@@ -152,6 +165,8 @@
         let likeDto = {
             likeCount: $("#like-count").text()
         }
+
+        console.log(likeDto);
 
         let response = await fetch(`/s/post/${postId}/like`, {
             headers: {

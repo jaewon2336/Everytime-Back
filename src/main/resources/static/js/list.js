@@ -37,8 +37,6 @@ async function write() {
         hashTag: null
     }
 
-    console.log(writeDto);
-
     let response = await fetch("/s/post", {
         method: "POST",
         body: JSON.stringify(writeDto),
@@ -55,9 +53,6 @@ async function write() {
         alert("글쓰기에 실패하였습니다.");
     }
 }
-
-let page = 0;
-let keyword = $("#keyword").val(""); // 초기화
 
 // 이전버튼
 $("#btn-prev").click(() => {
@@ -83,6 +78,10 @@ $("#btn-search").click(() => {
     list(keyword);
 });
 
+let page = 0;
+let keyword = $("#keyword").val(""); // 초기화
+
+// 검색
 async function list(keyword) {
     // alert(page);
     let response = await fetch(`/api/post/list?page=${page}&keyword=${keyword}`);

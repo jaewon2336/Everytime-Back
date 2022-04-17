@@ -44,6 +44,10 @@ public class PostController {
 
         for (Comment comment : postEntity.getComments()) {
             CommentResponseDto dto = new CommentResponseDto();
+            if (comment.isAnonyCheck() == true) {
+                comment.getUser().setUsername("익명");
+            }
+
             dto.setComment(comment);
             if (principal != null) { // 인증
                 if (principal.getId() == comment.getUser().getId()) { // 권한
