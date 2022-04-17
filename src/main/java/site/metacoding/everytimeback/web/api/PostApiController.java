@@ -21,7 +21,6 @@ import site.metacoding.everytimeback.domain.post.Post;
 import site.metacoding.everytimeback.domain.user.User;
 import site.metacoding.everytimeback.service.PostService;
 import site.metacoding.everytimeback.web.dto.post.DetailResponseDto;
-import site.metacoding.everytimeback.web.dto.post.LikeReqDto;
 import site.metacoding.everytimeback.web.dto.post.WriteDto;
 
 @RequiredArgsConstructor
@@ -31,33 +30,24 @@ public class PostApiController {
     private final PostService postService;
     private final HttpSession session;
 
+    // 글쓰기
     @PostMapping("/s/post")
-    public ResponseEntity<?> write(@RequestBody WriteDto writeDto) { // ResponseEntity는 @RequestBody가 없어도 json으로 파싱해준다
-                                                                     // 아닌데?
-
+    public ResponseEntity<?> write(@RequestBody WriteDto writeDto) {
         User principal = (User) session.getAttribute("principal");
         Post post = writeDto.toEntity(principal);
-
         postService.글쓰기(post);
-
         return new ResponseEntity<>(1, HttpStatus.OK);
     }
 
+    // 글목록
     @GetMapping("/api/post/list")
     public ResponseEntity<?> list(String keyword, Integer page,
             @PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-
-        // System.out.println("pageable : " + pageable.getPageNumber());
-        // System.out.println("page : " + page);
-
         Page<Post> posts = postService.글목록보기(keyword, pageable);
-
-        // System.out.println("잘왔어? " + posts);
-        // System.out.println("잘왔어? " + posts.getSize());
-
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
+    // 글상세보기
     @GetMapping("/api/post/{id}")
     public ResponseEntity<?> detail(@PathVariable Integer id) {
         Post postEntity = postService.글상세보기(id);
@@ -69,28 +59,25 @@ public class PostApiController {
                 auth = true;
             }
         }
-
         DetailResponseDto detailResponseDto = new DetailResponseDto(postEntity, auth);
-
         return new ResponseEntity<>(detailResponseDto, HttpStatus.OK);
     }
 
+    // 글삭제하기
     @DeleteMapping("/s/api/post/{id}")
     public ResponseEntity<?> deleteById(@PathVariable Integer id) {
         postService.글삭제하기(id);
         return new ResponseEntity<>(1, HttpStatus.OK);
     }
 
+    // 글수정하기
     @PutMapping("/s/post/{id}")
     public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody Post post) {
 
         // 인증 -> 인터셉터가 처리
-
         // 권한
         User principal = (User) session.getAttribute("principal");
-
         Post postEntity = postService.글상세보기(id);
-
         if (postEntity.getUser().getId() != principal.getId()) {
             throw new RuntimeException("해당 게시글을 수정할 권한이 없습니다.");
         }
@@ -100,14 +87,11 @@ public class PostApiController {
         return new ResponseEntity<>(1, HttpStatus.OK);
     }
 
+    // 공감카운팅
     @PutMapping("/s/post/{postId}/like")
     public ResponseEntity<?> likeUp(@PathVariable Integer postId, @RequestBody Post post) {
-        // postId받아서
-        // findById하고
-        Post postEntity = postService.좋아요카운팅(postService.글상세보기(postId));
-        // likeCount +1해서
-        // update
-        return new ResponseEntity<>(postEntity, HttpStatus.OK);
+        // postId받아서 -> findById하고 -> likeCount +1해서 -> update
+        postService.좋아요카운팅(postService.글상세보기(postId));
+        return new ResponseEntity<>(1, HttpStatus.OK);
     }
-
 }

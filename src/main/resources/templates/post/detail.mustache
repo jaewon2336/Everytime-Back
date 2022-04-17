@@ -40,7 +40,7 @@
             <hr />
             <div class="my_post_detail_flex">
 
-                <span class="my_likeCount mb-3">
+                <span class="mb-3">
                     <span id="like-count">{{likeCount}}</span>
                     <button data-toggle="modal" class="btn btn-secondary" data-target="#myModal">공감</button>
                 </span>
@@ -74,12 +74,12 @@
 
 
                 <hr />
-                <span class="my_commentCount mb-3">
+                <span class="mb-3">
                     <span id="comment-count">{{commentCount}}</span>
                     <button id="btn-like" class="btn btn-secondary">댓글</button>
                 </span>
                 <hr />
-                <span class="my_scrapCount mb-3">
+                <span class=mb-3">
                     <span id="scrap-count">0</span>
                     <button id="btn-like" class="btn btn-secondary">스크랩</button>
                 </span>
@@ -163,7 +163,9 @@
 
         let responseParse = await response.json();
 
-        $("#like-count").text(responseParse.likeCount);
+        if (responseParse != 1) {
+            alert("이 글을 공감할 수 없습니다.");
+        }
     }
 
     // 댓글 삭제
