@@ -64,8 +64,6 @@
             content: $("#content").val()
         }
 
-        console.log(postDto);
-
         let id = $("#postId").val();
 
         let response = await fetch("/s/post/" + id, {
@@ -76,10 +74,7 @@
             body: JSON.stringify(postDto)
         });
 
-        console.log("response : " + response);
-
         let responseParse = await response.json();
-        console.log("responseParse : " + responseParse);
 
         if (responseParse === 1) {
             alert("수정이 정상적으로 완료되었습니다.");

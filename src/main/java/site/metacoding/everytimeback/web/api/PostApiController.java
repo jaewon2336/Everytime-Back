@@ -21,6 +21,7 @@ import site.metacoding.everytimeback.domain.post.Post;
 import site.metacoding.everytimeback.domain.user.User;
 import site.metacoding.everytimeback.service.PostService;
 import site.metacoding.everytimeback.web.dto.post.DetailResponseDto;
+import site.metacoding.everytimeback.web.dto.post.LikeReqDto;
 import site.metacoding.everytimeback.web.dto.post.WriteDto;
 
 @RequiredArgsConstructor
@@ -97,6 +98,16 @@ public class PostApiController {
         postService.글수정하기(post, id);
 
         return new ResponseEntity<>(1, HttpStatus.OK);
+    }
+
+    @PutMapping("/s/post/{postId}/like")
+    public ResponseEntity<?> likeUp(@PathVariable Integer postId, @RequestBody Post post) {
+        // postId받아서
+        // findById하고
+        Post postEntity = postService.좋아요카운팅(postService.글상세보기(postId));
+        // likeCount +1해서
+        // update
+        return new ResponseEntity<>(postEntity, HttpStatus.OK);
     }
 
 }

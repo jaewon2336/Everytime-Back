@@ -54,6 +54,12 @@ textarea {
     resize: none;
 }
 
+.my_post_detail_flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .my_post_detail_flex_space_between {
     display: flex;
     justify-content: space-between;
@@ -118,4 +124,16 @@ textarea {
 
 .my_hidden {
     display: none;
+}
+
+.my_likeCount {
+    
+}
+
+.my_commentCount {
+    
+}
+
+.my_scrapCount {
+    
 }

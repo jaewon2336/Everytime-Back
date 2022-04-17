@@ -25,6 +25,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import site.metacoding.everytimeback.domain.comment.Comment;
+import site.metacoding.everytimeback.domain.scrap.Scrap;
 import site.metacoding.everytimeback.domain.user.User;
 
 @AllArgsConstructor
@@ -60,6 +61,10 @@ public class Post {
     private Integer boardNo;
 
     private Integer likeCount;
+
+    // @JsonIgnoreProperties({ "post" }) // messageConverter에게 알려주는 어노테이션
+    // @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    // private Scrap scrap;
 
     private boolean anonyCheck;
 

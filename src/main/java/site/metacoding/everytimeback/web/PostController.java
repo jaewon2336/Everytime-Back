@@ -40,14 +40,11 @@ public class PostController {
         User principal = (User) session.getAttribute("principal");
 
         List<CommentResponseDto> comments = new ArrayList<>();
-
-        System.out.println("comments : " + comments);
+        Integer commentCount = 0;
 
         for (Comment comment : postEntity.getComments()) {
-
             CommentResponseDto dto = new CommentResponseDto();
             dto.setComment(comment);
-
             if (principal != null) { // 인증
                 if (principal.getId() == comment.getUser().getId()) { // 권한
                     dto.setAuth(true);
@@ -55,10 +52,12 @@ public class PostController {
                     dto.setAuth(false);
                 }
             }
-
             comments.add(dto);
+            commentCount = comments.size();
         }
 
+        model.addAttribute("commentCount", commentCount);
+        model.addAttribute("likeCount", postEntity.getLikeCount());
         model.addAttribute("comments", comments);
         model.addAttribute("postId", id);
 
