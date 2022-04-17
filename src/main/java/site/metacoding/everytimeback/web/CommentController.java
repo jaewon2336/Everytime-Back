@@ -24,6 +24,7 @@ public class CommentController {
         User principal = (User) session.getAttribute("principal");
 
         comment.setUser(principal);
+
         commentService.댓글쓰기(comment, postId);
         return "redirect:/post/" + postId;
     }

@@ -44,6 +44,10 @@ public class PostController {
 
         for (Comment comment : postEntity.getComments()) {
             CommentResponseDto dto = new CommentResponseDto();
+            if (comment.isAnonyCheck() == true) {
+                comment.getUser().setUsername("익명");
+            }
+
             dto.setComment(comment);
             if (principal != null) { // 인증
                 if (principal.getId() == comment.getUser().getId()) { // 권한
@@ -53,7 +57,7 @@ public class PostController {
                 }
             }
             comments.add(dto);
-            commentCount = comments.size();
+            commentCount = comments.size(); // 댓글 개수 모델에 담아가기
         }
 
         model.addAttribute("commentCount", commentCount);

@@ -9,6 +9,11 @@ $("#submit").click(() => {
     write();
 });
 
+// 익명 체크 이벤트
+$("#anony").click(() => {
+    $("#anony").toggleClass("my_btn_active");
+});
+
 // 글쓰기 페이지 열기
 function writeForm() {
     if ($("#write-form").hasClass("my_hidden") == true) {
@@ -23,14 +28,12 @@ function writeForm() {
 // 글쓰기
 async function write() {
 
-    let likeCount = 0
-
     let writeDto = {
         title: $("#title").val(),
         content: $("#content").val(),
         boardNo: $("#board-no").val(),
-        likeCount: likeCount,
-        anonyCheck: $("#anony").hasClass("anony_active"),
+        likeCount: 0,
+        anonyCheck: $("#anony").hasClass("my_btn_active"),
         hashTag: null
     }
 
@@ -50,9 +53,6 @@ async function write() {
         alert("글쓰기에 실패하였습니다.");
     }
 }
-
-let page = 0;
-let keyword = $("#keyword").val(""); // 초기화
 
 // 이전버튼
 $("#btn-prev").click(() => {
@@ -78,6 +78,10 @@ $("#btn-search").click(() => {
     list(keyword);
 });
 
+let page = 0;
+let keyword = $("#keyword").val(""); // 초기화
+
+// 검색
 async function list(keyword) {
     // alert(page);
     let response = await fetch(`/api/post/list?page=${page}&keyword=${keyword}`);
@@ -94,11 +98,16 @@ async function list(keyword) {
 }
 
 function postList(post) {
+    if (post.anonyCheck == true) {
+        post.user.username = "익명";
+    }
+
     return `<a href="/post/${post.id}" class="card card_box">
                 <div class="card-body">
                     <p id="post-id" type="hidden" value="${post.id}"></p>
                     <h4 class="card-title">${post.title}</h4>
                     <p class="card-text">${post.content}</p>
+                    <p class="card-text">${post.user.username}</p>
                     <p class="card-text">${post.createDate}</p>
                 </div>
             </a>`;

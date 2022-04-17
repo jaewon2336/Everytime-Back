@@ -112,7 +112,7 @@ textarea {
 
 .submit {
     background-color: #c62917;
-    background-image: url("images/submit.png");
+    background-image: url("/images/submit.png");
     display: inline-block;
     width: 50px;
     height: 40px;
@@ -126,14 +126,6 @@ textarea {
     display: none;
 }
 
-.my_likeCount {
-    
-}
-
-.my_commentCount {
-    
-}
-
-.my_scrapCount {
-    
+.my_btn_active {
+    background-image: url("/images/anonym.active.png");
 }
