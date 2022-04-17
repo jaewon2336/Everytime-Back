@@ -1,5 +1,6 @@
 package site.metacoding.everytimeback.web.dto.user;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -10,16 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class LoginDto {
+public class EmailUpdateDto {
 
-    @Size(min = 4, max = 20)
+    @Size(min = 8, max = 60)
     @NotBlank
-    private String username;
-
-    @Size(min = 4, max = 20)
-    @NotBlank
-    private String password;
-
-    private String remember;
-
+    @Email
+    private String email;
 }
