@@ -8,16 +8,21 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import site.metacoding.everytimeback.domain.post.Post;
 import site.metacoding.everytimeback.domain.user.User;
 import site.metacoding.everytimeback.service.PostService;
+import site.metacoding.everytimeback.web.dto.ResponseDto;
+import site.metacoding.everytimeback.web.dto.post.DetailResponseDto;
 import site.metacoding.everytimeback.web.dto.post.WriteDto;
 
 @RequiredArgsConstructor
@@ -65,7 +70,40 @@ public class PostApiController {
                 auth = true;
             }
         }
-        return new ResponseEntity<>(postEntity, HttpStatus.OK);
+
+        DetailResponseDto detailResponseDto = new DetailResponseDto(postEntity, auth);
+
+        return new ResponseEntity<>(detailResponseDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/s/api/post/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Integer id) {
+        postService.글삭제하기(id);
+        return new ResponseEntity<>(1, HttpStatus.OK);
+    }
+
+    @PutMapping("/s/post/{id}")
+    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody Post post) {
+
+        System.out.println("=====================" + post);
+
+        // 인증
+        User principal = (User) session.getAttribute("principal");
+
+        if (principal == null) {
+            throw new RuntimeException("로그인에 실패하였습니다.");
+        }
+
+        // 권한
+        Post postEntity = postService.글상세보기(id);
+
+        if (postEntity.getUser().getId() != principal.getId()) {
+            throw new RuntimeException("해당 게시글을 수정할 권한이 없습니다.");
+        }
+
+        postService.글수정하기(post, id);
+
+        return new ResponseEntity<>(1, HttpStatus.OK);
     }
 
 }

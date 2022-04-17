@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ public class PostService {
 
     private final PostRepository postRepository;
 
+    @Transactional
     public void 글쓰기(Post post) {
         postRepository.save(post);
     }
@@ -34,4 +36,22 @@ public class PostService {
             throw new RuntimeException("존재하지 않는 게시물입니다.");
         }
     }
+
+    @Transactional
+    public void 글삭제하기(Integer id) {
+        postRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void 글수정하기(Post post, Integer id) {
+        // 영속화
+        Optional<Post> postOp = postRepository.findById(id);
+
+        // 변경감지
+        if (postOp.isPresent()) {
+            Post postEntity = postOp.get();
+            postEntity.setTitle(post.getTitle());
+            postEntity.setContent(post.getContent());
+        }
+    } // 더티체킹 완료 (수정됨)
 }
