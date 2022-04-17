@@ -54,11 +54,18 @@ public class PostApiController {
         User principal = (User) session.getAttribute("principal");
         boolean auth = false;
 
+        // 권한체크
         if (principal != null) {
             if (principal.getId() == postEntity.getUser().getId()) {
                 auth = true;
             }
+
+            if (postEntity.isAnonyCheck() == true) {
+                postEntity.getUser().setUsername("익명");
+            }
         }
+
+        System.out.println("익명인가요?" + postEntity.getUser().getUsername());
         DetailResponseDto detailResponseDto = new DetailResponseDto(postEntity, auth);
         return new ResponseEntity<>(detailResponseDto, HttpStatus.OK);
     }
