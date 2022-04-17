@@ -14,14 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import site.metacoding.everytimeback.domain.post.Post;
 import site.metacoding.everytimeback.domain.user.User;
 import site.metacoding.everytimeback.service.PostService;
-import site.metacoding.everytimeback.web.dto.ResponseDto;
 import site.metacoding.everytimeback.web.dto.post.DetailResponseDto;
 import site.metacoding.everytimeback.web.dto.post.WriteDto;
 
@@ -85,16 +83,11 @@ public class PostApiController {
     @PutMapping("/s/post/{id}")
     public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody Post post) {
 
-        System.out.println("=====================" + post);
-
-        // 인증
-        User principal = (User) session.getAttribute("principal");
-
-        if (principal == null) {
-            throw new RuntimeException("로그인에 실패하였습니다.");
-        }
+        // 인증 -> 인터셉터가 처리
 
         // 권한
+        User principal = (User) session.getAttribute("principal");
+
         Post postEntity = postService.글상세보기(id);
 
         if (postEntity.getUser().getId() != principal.getId()) {
