@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>메인대용</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="/css/writeForm.css">
+</head>
+
+<body>
+    <!-- 컨테이너 시작 -->
+    <div class="container mt-3">
+
+        <div class="jumbotron">
+            <h1>상세보기 화면입니다.</h1>
+        </div>
+
+        <input id="postId" type="hidden" value="{{postId}}">
+
+        <!-- 글 상세정보보기 시작 -->
+
+        <div id="post-box">
+            <div class="mb-3 mt-3">
+                작성자 : <span id="username"></span>
+            </div>
+            <div class="mb-3 mt-3">
+                <h1 id="title"></h1>
+            </div>
+            <hr />
+            <div id="content" class="mb-3">
+
+            </div>
+
+            <div id="auth-box" style="display: none;">
+                <a href="/s/post/{{postId}}/update" class="btn btn-secondary">수정</a>
+                <button id="btn-delete" class="btn btn-danger">삭제</button>
+            </div>
+        </div>
+        <br>
+
+        <!-- 글 상세정보보기 끝 -->
+
+        <!-- 댓글 시작 -->
+        <div class="card">
+            <form action="/s/post/{{postId}}/comment" method="post">
+                <div class="card-body">
+                    <textarea name="content" class="form-control" rows="1"></textarea>
+                    <input type="hidden" value="0" name="likeCount">
+                    <input type="hidden" value="false" name="anonyCheck">
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">등록</button>
+                </div>
+            </form>
+        </div>
+        <br />
+
+        <div class="card">
+            <div class="card-header"><b>댓글 리스트</b></div>
+            <ul id="reply-box" class="list-group">
+
+                {{#comments}}
+                <li class="list-group-item d-flex justify-content-between">
+                    <div>{{comment.content}}</div>
+                    <div class="d-flex">
+                        <div class="font-italic">작성자 : {{comment.user.username}} &nbsp;</div>
+                        {{#auth}}
+                        <button class="badge bg-primary" onclick="deleteComment('{{comment.id}}');">삭제</button>
+                        {{/auth}}
+                    </div>
+                </li>
+                {{/comments}}
+
+            </ul>
+        </div>
+        <br />
+        <!-- 댓글 끝 -->
+    </div>
+</body>
+
+<script>
+    // 게시글 정보 불러오기
+    async function detail() {
+        let postId = $("#postId").val();
+
+        let response = await fetch(`/api/post/${postId}`);
+        let responseParse = await response.json();
+
+        console.log(responseParse);
+
+        if (responseParse.auth == true) {
+            $("#auth-box").css("display", "block");
+        }
+
+        $("#username").text(responseParse.post.user.username);
+        $("#title").text(responseParse.post.title);
+        $("#content").html(responseParse.post.content);
+    }
+
+    detail();
+
+    // 삭제
+    $("#btn-delete").click(() => {
+        deletePost();
+    });
+
+    async function deletePost() {
+        let postId = $("#postId").val();
+
+        let response = await fetch(`/s/api/post/${postId}`, {
+            method: "DELETE" // delete는 body가 없다.
+        });
+
+        let responseParse = await response.json();
+
+        if (responseParse === 1) {
+            alert("삭제되었습니다.");
+            location.href = "/";
+        } else {
+            alert("삭제에 실패했습니다.");
+        }
+    }
+
+    // 댓글 삭제
+    async function deleteComment(commentId) {
+        let response = await fetch(`/s/api/comment/${commentId}`, {
+            method: "DELETE"
+        });
+        let responseParse = await response.json();
+        if (responseParse.code == 1) {
+            alert("삭제 성공");
+            location.reload(); // 페이지 새로고침 ajax + ssr
+        } else {
+            alert("삭제 실패");
+        }
+    }
+</script>
+
+</html>

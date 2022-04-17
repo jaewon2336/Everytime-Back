@@ -1,0 +1,121 @@
+.my_post_btn {
+    margin-top: 50px;
+}
+
+a {
+    display: block;
+
+    color: #444444;
+}
+
+a:hover {
+    background-color: #f8f8f8;
+    text-decoration: none;
+    color: #444444;
+}
+
+.card_box {
+    margin-top: 50px;
+    border: 1px solid #737373;
+}
+
+.write_form {
+    margin: 50px 0;
+    border: 2px solid #d6d6d6;
+}
+
+.write {
+    padding: 15px;
+    border-bottom: 1px solid #d6d6d6;
+}
+
+p {
+    margin: 0;
+}
+
+input {
+    display: block;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    border: 0;
+    color: #444444;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+textarea {
+    display: block;
+    width: 100%;
+    height: 350px;
+    border: 0;
+    color: #444444;
+    font-size: 14px;
+    resize: none;
+}
+
+.my_post_detail_flex_space_between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.my_comment_buttons {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.tag {
+    margin-right: 5px;
+    background-image: url("/images/hashtag.png");
+    display: inline-block;
+    width: 50px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 40px 40px;
+    cursor: pointer;
+}
+
+.file {
+    margin-right: 5px;
+    background-image: url("/images/attach.png");
+    display: inline-block;
+    width: 50px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 40px 40px;
+    cursor: pointer;
+}
+
+.anony {
+    margin-right: 5px;
+    background-image: url("/images/anonym.png");
+    display: inline-block;
+    width: 50px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 40px 40px;
+    cursor: pointer;
+}
+
+.submit {
+    background-color: #c62917;
+    background-image: url("images/submit.png");
+    display: inline-block;
+    width: 50px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 40px 40px;
+    cursor: pointer;
+}
+
+.my_hidden {
+    display: none;
+}
