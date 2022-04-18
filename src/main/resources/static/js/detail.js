@@ -45,28 +45,22 @@ $("#btn-like").click(() => {
 // 공감
 async function likeUp() {
 
-    // $("#my-modal-text").text("이미 공감한 게시글입니다");
-    $("#btn-like").addClass("my_hidden");
-
     let postId = $("#postId").val();
-
-    let likeDto = {
-        likeCount: $("#like-count").text()
-    }
 
     let response = await fetch(`/s/post/${postId}/like`, {
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
         },
-        method: 'PUT',
-        body: JSON.stringify(likeDto)
+        method: 'PUT'
     });
 
     let responseParse = await response.json();
 
     if (response.status == 200) {
         $("#like-count").text(responseParse.likeCount);
-    } else[
-        alert("이 글을 공감할 수 없습니다.")
-    ]
+        $("#btn-like").addClass("my_hidden");
+        $("#my-modal-text").text("이미 공감한 게시글입니다."); // 수정필요
+    } else {
+        alert("이 글을 공감할 수 없습니다.");
+    }
 }

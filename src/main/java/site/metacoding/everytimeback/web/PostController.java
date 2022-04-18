@@ -72,10 +72,6 @@ public class PostController {
     public String updateForm(@PathVariable Integer id, Model model) {
         User principal = (User) session.getAttribute("principal");
 
-        if (principal == null) {
-            throw new RuntimeException("로그인이 필요한 서비스입니다.");
-        }
-
         Post postEntity = postService.글상세보기(id);
 
         if (postEntity.getUser().getId() != principal.getId()) {
