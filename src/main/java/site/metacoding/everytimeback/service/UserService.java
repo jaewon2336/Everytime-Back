@@ -8,7 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import site.metacoding.everytimeback.domain.user.User;
 import site.metacoding.everytimeback.domain.user.UserRepository;
+import site.metacoding.everytimeback.handler.ex.CustomException;
+import site.metacoding.everytimeback.util.email.EmailUtil;
 import site.metacoding.everytimeback.web.dto.user.EmailUpdateDto;
+import site.metacoding.everytimeback.web.dto.user.FindUsernameDto;
 import site.metacoding.everytimeback.web.dto.user.LoginDto;
 import site.metacoding.everytimeback.web.dto.user.PasswordUpdateDto;
 
@@ -17,6 +20,7 @@ import site.metacoding.everytimeback.web.dto.user.PasswordUpdateDto;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final EmailUtil emailUtil;
 
     @Transactional
     public void 회원가입(User user) {
@@ -69,6 +73,27 @@ public class UserService {
         } else {
             throw new RuntimeException("아이디를 찾을 수 없습니다");
         }
+    }
+
+    public void 유저네임보내주기(FindUsernameDto findUsernameDto) {
+        String receiverEmail = "";
+        String receiverUsername = "";
+
+        Optional<User> userOp = userRepository.findByEmail(
+                findUsernameDto.getEmail());
+
+        if (userOp.isPresent()) {
+            User userEntity = userOp.get();
+            receiverEmail = userEntity.getEmail();
+            receiverUsername = userEntity.getUsername();
+        } else {
+            throw new CustomException("해당 이메일이 존재하지 않습니다");
+        }
+
+        // System.out.println("받는 사람 이메일 : " + receiverEmail);
+        // System.out.println("받는 사람 유저네임 : " + receiverUsername);
+        emailUtil.sendEmail("\"" + receiverEmail + "\"", "요청하신 이메일의 ID", "ID : " + receiverUsername);
+
     }
 
 }

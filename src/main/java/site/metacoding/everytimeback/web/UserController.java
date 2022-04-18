@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import lombok.RequiredArgsConstructor;
 import site.metacoding.everytimeback.domain.user.User;
 import site.metacoding.everytimeback.service.UserService;
+import site.metacoding.everytimeback.util.UtilValid;
+import site.metacoding.everytimeback.web.dto.user.FindUsernameDto;
 import site.metacoding.everytimeback.web.dto.user.JoinDto;
 
 @RequiredArgsConstructor
@@ -45,6 +47,21 @@ public class UserController {
     @GetMapping("/s/user/{id}/email")
     public String emailUpdateForm(@PathVariable Integer id) {
         return "/user/emailUpdateForm";
+    }
+
+    @GetMapping("/user/find-username-form")
+    public String findUsernameForm() {
+        return "/user/findUsernameForm";
+    }
+
+    @GetMapping("/user/find-username")
+    public String findUsername(@Valid FindUsernameDto findUsernameDto, BindingResult bindingResult) {
+
+        UtilValid.요청에러처리(bindingResult);
+
+        userService.유저네임보내주기(findUsernameDto);
+
+        return "redirect:/login-form";
     }
 
     @PostMapping("/join")
