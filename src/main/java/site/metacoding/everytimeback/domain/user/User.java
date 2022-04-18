@@ -40,7 +40,7 @@ public class User {
     @Column(length = 30, nullable = false)
     private String nickname;
 
-    @Column(length = 60, nullable = false)
+    @Column(length = 60, nullable = false, unique = true)
     private String email;
 
     @Column(length = 60, nullable = false)

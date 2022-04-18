@@ -62,7 +62,7 @@ public class UserController {
 
         userService.유저네임보내주기(findUsernameDto);
 
-        return "redirect:/login-form";
+        return "redirect:/user/loginForm";
     }
 
     @GetMapping("/user/password-reset-form")
@@ -77,7 +77,7 @@ public class UserController {
 
         userService.패스워드초기화(passwordResetReqDto);
 
-        return "redirect:/login-form";
+        return "redirect:/user/loginForm";
     }
 
     @PostMapping("/join")

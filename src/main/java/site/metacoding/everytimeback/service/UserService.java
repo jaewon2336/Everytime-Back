@@ -117,11 +117,12 @@ public class UserService {
             randomPassword = randomNum.toString();
 
             userEntity.setPassword(randomPassword);
-            System.out.println(userEntity.getPassword());
+            // System.out.println(userEntity.getPassword());
 
         } else {
-            throw new CustomException("해당 이메일이 존재하지 않습니다");
+            throw new CustomException("해당 유저 혹은 이메일이 존재하지 않습니다");
         }
+
         emailUtil.sendEmail("\"" + receiverEmail + "\"", "비밀번호가 초기화 되었습니다",
                 "초기화된 비밀번호는 " + randomPassword + " 입니다. 로그인 후 비밀번호를 재설정하십시오.");
     }
