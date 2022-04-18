@@ -39,8 +39,8 @@ public class PostController {
         // comment의 userId랑 세션에 id랑 비교
         User principal = (User) session.getAttribute("principal");
 
+        // 댓글 뿌리기
         List<CommentResponseDto> comments = new ArrayList<>();
-        Integer commentCount = 0;
 
         for (Comment comment : postEntity.getComments()) {
             CommentResponseDto dto = new CommentResponseDto();
@@ -57,10 +57,9 @@ public class PostController {
                 }
             }
             comments.add(dto);
-            commentCount = comments.size(); // 댓글 개수 모델에 담아가기
         }
 
-        model.addAttribute("commentCount", commentCount);
+        model.addAttribute("commentCount", comments.size()); // 댓글 개수 모델에 담아가기
         model.addAttribute("likeCount", postEntity.getLikeCount());
         model.addAttribute("comments", comments);
         model.addAttribute("postId", id);

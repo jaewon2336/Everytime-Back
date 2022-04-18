@@ -55,7 +55,7 @@ public class PostService {
     } // 더티체킹 완료 (수정됨)
 
     @Transactional
-    public void 좋아요카운팅(Post post) {
+    public Post 좋아요카운팅(Post post) {
         // 영속화
         Optional<Post> postOp = postRepository.findById(post.getId());
 
@@ -63,6 +63,7 @@ public class PostService {
         if (postOp.isPresent()) {
             Post postEntity = postOp.get();
             postEntity.setLikeCount(post.getLikeCount() + 1);
+            return postEntity;
         } else {
             throw new RuntimeException("좋아요에 실패했습니다.");
         }

@@ -53,9 +53,14 @@ public class UserService {
 
         if (userOp.isPresent()) {
             User userEntity = userOp.get();
-            userEntity.setPassword(passwordUpdateDto.getPassword());
+
+            if (userEntity.getPassword().equals(passwordUpdateDto.getCurrentPassword())) {
+                userEntity.setPassword(passwordUpdateDto.getPassword()); // 비밀번호 변경
+            } else {
+                throw new RuntimeException("현재 비밀번호가 일치하지 않습니다.");
+            }
         } else {
-            throw new RuntimeException("아이디를 찾을 수 없습니다");
+            throw new RuntimeException("존재하지 않는 사용자입니다.");
         }
     }
 

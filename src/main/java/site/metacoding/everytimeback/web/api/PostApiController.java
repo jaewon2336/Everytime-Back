@@ -98,7 +98,7 @@ public class PostApiController {
     @PutMapping("/s/post/{postId}/like")
     public ResponseEntity<?> likeUp(@PathVariable Integer postId, @RequestBody Post post) {
         // postId받아서 -> findById하고 -> likeCount +1해서 -> update
-        postService.좋아요카운팅(postService.글상세보기(postId));
-        return new ResponseEntity<>(1, HttpStatus.OK);
+        Post postEntity = postService.좋아요카운팅(postService.글상세보기(postId));
+        return new ResponseEntity<>(postEntity, HttpStatus.OK);
     }
 }
