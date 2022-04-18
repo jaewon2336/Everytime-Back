@@ -49,5 +49,5 @@ public class Message {
     private String msg;
 
     @CreatedDate
-    private LocalDateTime createTime;
+    private LocalDateTime createDate;
 }

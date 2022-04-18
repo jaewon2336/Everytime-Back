@@ -1,5 +1,7 @@
 package site.metacoding.everytimeback.domain.postReport;
 
-public class PostReportRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PostReportRepository extends JpaRepository<PostReport, Integer> {
 
 }
