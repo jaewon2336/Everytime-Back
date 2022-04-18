@@ -15,6 +15,7 @@ import site.metacoding.everytimeback.service.UserService;
 import site.metacoding.everytimeback.util.UtilValid;
 import site.metacoding.everytimeback.web.dto.user.FindUsernameDto;
 import site.metacoding.everytimeback.web.dto.user.JoinDto;
+import site.metacoding.everytimeback.web.dto.user.PasswordResetReqDto;
 
 @RequiredArgsConstructor
 @Controller
@@ -60,6 +61,21 @@ public class UserController {
         UtilValid.요청에러처리(bindingResult);
 
         userService.유저네임보내주기(findUsernameDto);
+
+        return "redirect:/login-form";
+    }
+
+    @GetMapping("/user/password-reset-form")
+    public String passwordResetForm() {
+        return "/user/passwordResetForm";
+    }
+
+    @PostMapping("/user/password-reset")
+    public String passwordReset(@Valid PasswordResetReqDto passwordResetReqDto, BindingResult bindingResult) {
+
+        UtilValid.요청에러처리(bindingResult);
+
+        userService.패스워드초기화(passwordResetReqDto);
 
         return "redirect:/login-form";
     }

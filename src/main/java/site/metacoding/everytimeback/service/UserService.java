@@ -13,6 +13,7 @@ import site.metacoding.everytimeback.util.email.EmailUtil;
 import site.metacoding.everytimeback.web.dto.user.EmailUpdateDto;
 import site.metacoding.everytimeback.web.dto.user.FindUsernameDto;
 import site.metacoding.everytimeback.web.dto.user.LoginDto;
+import site.metacoding.everytimeback.web.dto.user.PasswordResetReqDto;
 import site.metacoding.everytimeback.web.dto.user.PasswordUpdateDto;
 
 @RequiredArgsConstructor
@@ -83,9 +84,11 @@ public class UserService {
                 findUsernameDto.getEmail());
 
         if (userOp.isPresent()) {
+
             User userEntity = userOp.get();
             receiverEmail = userEntity.getEmail();
             receiverUsername = userEntity.getUsername();
+
         } else {
             throw new CustomException("해당 이메일이 존재하지 않습니다");
         }
@@ -96,4 +99,30 @@ public class UserService {
 
     }
 
+    @Transactional
+    public void 패스워드초기화(PasswordResetReqDto passwordResetReqDto) {
+        String receiverEmail = "";
+        String randomPassword = "";
+
+        Optional<User> userOp = userRepository.findByUsernameAndEmail(
+                passwordResetReqDto.getUsername(),
+                passwordResetReqDto.getEmail());
+
+        if (userOp.isPresent()) {
+            User userEntity = userOp.get();
+            receiverEmail = userEntity.getEmail();
+
+            // 6자의 난수 생성 후 비밀번호 지정
+            Integer randomNum = (int) (Math.random() * (999999 - 100000 + 1) + 100000);
+            randomPassword = randomNum.toString();
+
+            userEntity.setPassword(randomPassword);
+            System.out.println(userEntity.getPassword());
+
+        } else {
+            throw new CustomException("해당 이메일이 존재하지 않습니다");
+        }
+        emailUtil.sendEmail("\"" + receiverEmail + "\"", "비밀번호가 초기화 되었습니다",
+                "초기화된 비밀번호는 " + randomPassword + " 입니다. 로그인 후 비밀번호를 재설정하십시오.");
+    }
 }
