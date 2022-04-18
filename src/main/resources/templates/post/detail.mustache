@@ -37,6 +37,41 @@
             <div class="mb-3 mt-3">
                 작성자 : <span id="username"></span>
             </div>
+            <a href="#" data-toggle="modal" data-target="#myReportModal">신고</a>
+
+            <!-- 신고 Modal -->
+            <div class="modal fade" id="myReportModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">신고 사유 선택</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body my_report_content">
+                            <a id="post-report-1" href="#">게시판 성격에 부적절함</a>
+                            <hr />
+                            <a id="post-report-2" href="#">욕설/비하</a>
+                            <hr />
+                            <a id="post-report-3" href="#">음란물/불건전한 만남 및 대화</a>
+                            <hr />
+                            <a id="post-report-4" href="#">상업적 광고 및 판매</a>
+                            <hr />
+                            <a id="post-report-5" href="#">유출/사칭/사기</a>
+                            <hr />
+                            <a id="post-report-6" href="#">낚시/놀람/도배</a>
+                            <hr />
+                            <a id="post-report-7" href="#">정당/정치인 비하 및 선거운동</a>
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#">쪽지</a>
+
             <div class="mb-3 mt-3">
                 <h1 id="title"></h1> <!-- 제목 -->
             </div>
@@ -174,6 +209,59 @@
 <script src="/js/detail.js"></script>
 
 <script>
+    $("#post-report-1").click(() => {
+        report($("#post-report-1").text());
+    });
+
+    $("#post-report-2").click(() => {
+        report($("#post-report-2").text());
+    });
+
+    $("#post-report-3").click(() => {
+        report($("#post-report-3").text());
+    });
+
+    $("#post-report-4").click(() => {
+        report($("#post-report-4").text());
+    });
+
+    $("#post-report-5").click(() => {
+        report($("#post-report-5").text());
+    });
+
+    $("#post-report-6").click(() => {
+        report($("#post-report-6").text());
+    });
+
+    $("#post-report-7").click(() => {
+        report($("#post-report-7").text());
+    });
+
+    let postId = $("#postId").val();
+
+    async function report(reason) {
+
+        let reportDto = {
+            reason: reason
+        }
+
+        let response = await fetch(`/s/post/${postId}/report`, {
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            method: 'POST',
+            body: JSON.stringify(reportDto)
+        });
+
+        let responseParse = await response.json();
+
+        if (responseParse == 1) {
+            alert("성공적으로 신고가 반영되었습니다.");
+            location.href = "/";
+        } else {
+            alert("신고에 실패했습니다.");
+        }
+    }
 
     // 익명 체크 이벤트
     $("#anony").click(() => {

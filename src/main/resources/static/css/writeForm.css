@@ -129,3 +129,13 @@ textarea {
 .my_btn_active {
     background-image: url("/images/anonym.active.png");
 }
+
+.my_report_content a {
+    font-size: 14px;
+    color: #444444;
+}
+
+.my_report_content a:hover {
+    font-weight: bold;
+    background-color: transparent;
+}
