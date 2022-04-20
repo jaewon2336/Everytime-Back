@@ -2,10 +2,12 @@ package site.metacoding.everytimeback.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import site.metacoding.everytimeback.domain.certificate.Certificate;
 import site.metacoding.everytimeback.domain.user.User;
 import site.metacoding.everytimeback.domain.user.UserRepository;
 import site.metacoding.everytimeback.handler.ex.CustomException;
@@ -126,4 +128,5 @@ public class UserService {
         emailUtil.sendEmail("\"" + receiverEmail + "\"", "비밀번호가 초기화 되었습니다",
                 "초기화된 비밀번호는 " + randomPassword + " 입니다. 로그인 후 비밀번호를 재설정하십시오.");
     }
+
 }

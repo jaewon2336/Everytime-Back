@@ -1,5 +1,7 @@
 package site.metacoding.everytimeback.domain.certificate;
 
-public class CertificateRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CertificateRepository extends JpaRepository<Certificate, Integer> {
 
 }

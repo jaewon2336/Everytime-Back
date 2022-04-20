@@ -1,0 +1,16 @@
+<div class="container">
+    <form action="/certificate/register" method="post" enctype="multipart/form-data">
+        <input type="hidden" value="{{principal.id}}">
+        <div class="form-group">
+            <select class="form-control" name="certificateNo">
+                <option value="1">학교별웹메일</option>
+                <option value="2">졸업증명서</option>
+                <option value="3">학생증사진</option>
+            </select>
+        </div>
+        <input type="file" name="certificate">
+        <button type="submit">
+            인증요청하기
+        </button>
+    </form>
+</div>

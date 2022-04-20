@@ -19,4 +19,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query(value = "SELECT * FROM user WHERE username=:username AND email=:email", nativeQuery = true)
     Optional<User> findByUsernameAndEmail(@Param("username") String username, @Param("email") String email);
+
 }
