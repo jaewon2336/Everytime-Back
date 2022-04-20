@@ -60,9 +60,14 @@ public class UserService {
 
         if (userOp.isPresent()) {
             User userEntity = userOp.get();
-            userEntity.setPassword(passwordUpdateDto.getPassword());
+
+            if (userEntity.getPassword().equals(passwordUpdateDto.getCurrentPassword())) {
+                userEntity.setPassword(passwordUpdateDto.getPassword()); // 비밀번호 변경
+            } else {
+                throw new RuntimeException("현재 비밀번호가 일치하지 않습니다.");
+            }
         } else {
-            throw new RuntimeException("아이디를 찾을 수 없습니다");
+            throw new RuntimeException("존재하지 않는 사용자입니다.");
         }
     }
 
@@ -128,5 +133,4 @@ public class UserService {
         emailUtil.sendEmail("\"" + receiverEmail + "\"", "비밀번호가 초기화 되었습니다",
                 "초기화된 비밀번호는 " + randomPassword + " 입니다. 로그인 후 비밀번호를 재설정하십시오.");
     }
-
 }
