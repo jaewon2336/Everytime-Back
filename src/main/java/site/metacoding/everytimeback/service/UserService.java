@@ -2,10 +2,12 @@ package site.metacoding.everytimeback.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import site.metacoding.everytimeback.domain.certificate.Certificate;
 import site.metacoding.everytimeback.domain.user.User;
 import site.metacoding.everytimeback.domain.user.UserRepository;
 import site.metacoding.everytimeback.handler.ex.CustomException;
